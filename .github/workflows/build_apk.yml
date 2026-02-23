@@ -26,16 +26,6 @@ jobs:
           flutter-version: ${{ env.flutter_version }}
           channel: 'stable'
           
-      - name: Cache Flutter packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.gradle/caches
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-
-            
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -45,33 +35,11 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
         
-      - name: Analyze code
-        run: flutter analyze || true
-        
       - name: Build debug APK
         run: flutter build apk --debug
         
-      - name: Build release APK
-        run: flutter build apk --release
-        
-      - name: Upload APK artifacts
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: apk-files
-          path: |
-            build/app/outputs/flutter-apk/app-debug.apk
-            build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 30
-          
-      - name: Upload debug APK to releases
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/app/outputs/flutter-apk/app-debug.apk
-          draft: false
-          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: List built APKs
-        run: ls -la build/app/outputs/flutter-apk/
+          name: app-debug.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
