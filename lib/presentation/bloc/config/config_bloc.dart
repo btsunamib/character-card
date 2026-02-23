@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/network/api_client.dart';
-import '../../../data/models/app_config_model.dart';
 import '../../../domain/repositories/repositories.dart';
 import 'config_event.dart';
 import 'config_state.dart';
@@ -37,8 +36,8 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   }
 
   Future<void> _onSaveConfig(SaveConfig event, Emitter<ConfigState> emit) async {
-    if (state is ConfigLoaded) {
-      final currentState = state as ConfigLoaded;
+    final currentState = state;
+    if (currentState is ConfigLoaded) {
       final newConfig = currentState.config.copyWith(
         apiUrl: event.apiUrl,
         apiKey: event.apiKey,
@@ -64,8 +63,8 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
 
   Future<void> _onTestApiConnection(
       TestApiConnection event, Emitter<ConfigState> emit) async {
-    if (state is ConfigLoaded) {
-      final currentState = state as ConfigLoaded;
+    final currentState = state;
+    if (currentState is ConfigLoaded) {
       emit(currentState.copyWith(isTesting: true, connectionTestResult: null));
 
       final result = await apiRepository.testConnection(event.apiUrl, event.apiKey);
@@ -104,8 +103,8 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   }
 
   Future<void> _onLoadModels(LoadModels event, Emitter<ConfigState> emit) async {
-    if (state is ConfigLoaded) {
-      final currentState = state as ConfigLoaded;
+    final currentState = state;
+    if (currentState is ConfigLoaded) {
       emit(currentState.copyWith(isTesting: true));
 
       final result = await apiRepository.getModels(event.apiUrl, event.apiKey);

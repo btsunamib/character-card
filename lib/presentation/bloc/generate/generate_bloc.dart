@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-import '../../../data/models/character_card_model.dart';
 import '../../../domain/repositories/repositories.dart';
 import 'generate_event.dart';
 import 'generate_state.dart';
@@ -41,10 +40,8 @@ class GenerateBloc extends Bloc<GenerateEvent, GenerateState> {
         ));
       },
       (card) {
-        final cardWithId = card.copyWith(
-          id: card.id.isEmpty ? _uuid.v4() : card.id,
-          createdAt: DateTime.now(),
-        );
+        final newId = card.id.isEmpty ? _uuid.v4() : card.id;
+        final cardWithId = card.copyWith(id: newId, createdAt: DateTime.now());
         emit(GenerateSuccess(card: cardWithId));
       },
     );
@@ -68,10 +65,10 @@ class GenerateBloc extends Bloc<GenerateEvent, GenerateState> {
   ) async {
     if (state is GenerateSuccess) {
       final currentState = state as GenerateSuccess;
-      final cardToSave = currentState.card.copyWith(
-        id: currentState.card.id.isEmpty ? _uuid.v4() : currentState.card.id,
-        createdAt: DateTime.now(),
-      );
+      final existingCard = currentState.card;
+      final cardToSave = existingCard.id.isEmpty 
+          ? existingCard.copyWith(id: _uuid.v4(), createdAt: DateTime.now())
+          : existingCard;
 
       final result = await characterRepository.saveToHistory(cardToSave);
 

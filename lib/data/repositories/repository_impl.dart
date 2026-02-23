@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import '../../core/errors/failures.dart';
 import '../../core/network/api_client.dart';

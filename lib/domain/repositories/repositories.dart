@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import '../../core/errors/failures.dart';
-import '../models/app_config_model.dart';
-import '../models/character_card_model.dart';
+import '../../data/models/app_config_model.dart';
+import '../../data/models/character_card_model.dart';
 
 abstract class ConfigRepository {
   Future<Either<Failure, AppConfig>> getConfig();

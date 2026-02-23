@@ -20,7 +20,6 @@ class GeneratePage extends StatefulWidget {
 }
 
 class _GeneratePageState extends State<GeneratePage> {
-  final _formKey = GlobalKey<FormState>();
   final _characterInfoController = TextEditingController();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
