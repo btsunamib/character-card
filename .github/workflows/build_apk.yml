@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.0'
-          
+
       - name: Create Flutter project
         run: |
           flutter create --org com.sillytavern --project-name card_generator temp_project
           rm -rf android
           mv temp_project/android android
           rm -rf temp_project
-          
+
       - run: flutter pub get
-      
+
       - run: flutter build apk --debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
