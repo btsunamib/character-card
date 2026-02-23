@@ -13,7 +13,7 @@ jobs:
       
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.27.0'
           
       - name: Create Flutter project
         run: |
@@ -21,10 +21,6 @@ jobs:
           rm -rf android
           mv temp_project/android android
           rm -rf temp_project
-          
-      - name: Update Kotlin version
-        run: |
-          sed -i 's/org.jetbrains.kotlin.android.*/org.jetbrains.kotlin.android:1.9.22/' android/settings.gradle.kts
           
       - run: flutter pub get
       
