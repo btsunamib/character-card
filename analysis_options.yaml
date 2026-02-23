@@ -13,3 +13,5 @@ analyzer:
     - "**/*.freezed.dart"
   errors:
     invalid_annotation_target: ignore
+    use_super_parameters: ignore
+    prefer_const_constructors: ignore
