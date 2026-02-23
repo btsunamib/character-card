@@ -22,6 +22,10 @@ jobs:
           mv temp_project/android android
           rm -rf temp_project
           
+      - name: Update Kotlin version
+        run: |
+          sed -i 's/org.jetbrains.kotlin.android.*/org.jetbrains.kotlin.android:1.9.22/' android/settings.gradle.kts
+          
       - run: flutter pub get
       
       - run: flutter build apk --debug
