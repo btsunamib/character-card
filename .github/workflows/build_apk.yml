@@ -15,8 +15,12 @@ jobs:
         with:
           flutter-version: '3.24.0'
           
+      - name: Create Flutter project
+        run: |
+          flutter create --org com.sillytavern --project-name card_generator temp_project
+          mv temp_project/android/* android/
+          rm -rf temp_project
+          
       - run: flutter pub get
       
-      - run: flutter analyze
-        
       - run: flutter build apk --debug
