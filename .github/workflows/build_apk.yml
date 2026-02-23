@@ -31,7 +31,7 @@ jobs:
         with:
           path: |
             ~/.pub-cache
-            ~/.gradle
+            ~/.gradle/caches
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
@@ -41,7 +41,6 @@ jobs:
         with:
           java-version: ${{ env.java_version }}
           distribution: 'temurin'
-          cache: 'gradle'
           
       - name: Get dependencies
         run: flutter pub get
